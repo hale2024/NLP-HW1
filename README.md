@@ -1,4 +1,4 @@
-# IBM Model 1: Spanish to English Translation
+# Project 1: MT evaluation and implementing IBM Model 1
 
 ## Team 8
 - Sabiha Tahsin Soha
@@ -9,7 +9,7 @@
 
 See [ML for NLP Team 8 Part 1.pdf](ML%20for%20NLP%20Team%208%20Part%201.pdf)
 
-## Part 2: Implementing IBM Model 1
+## Part 2: Implementing IBM Model 1 (for Spanish to English Translation)
 
 Implementation of IBM Model 1 statistical machine translation using the Europarl parallel corpus of Spanish-English.
 
