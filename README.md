@@ -24,7 +24,7 @@ This project implements the Expectation-Maximization (EM) algorithm for IBM Mode
 ```
 
 This runs the complete pipeline:
-1. **Preprocessing** - Downloads Europarl corpus and tokenizes text
+1. **Preprocessing** - Downloads Europarl Spanish-English corpus and tokenizes text
 2. **Training** - Trains IBM Model 1 using EM algorithm
 3. **Analysis** - Generates translation tables and perplexity comparisons
 
