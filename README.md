@@ -24,8 +24,8 @@ This runs the complete pipeline:
 
 ## Results
 
-- [Translation Tables](tables/translation_tables.txt) - Top translations for most common Spanish words
-- [Perplexity Comparison](tables/perplexity_comparison.txt) - Real vs random translation analysis
+- [Translation Tables](tables/translation_tables.txt) - Top 10 most common source-language(Spanish) words
+- [Perplexity Comparison](tables/perplexity_comparison.txt) - Perplexity scores for Real sentence from the training data vs randomly-sampled target-language(English) sentences of the same length
 
 ## Requirements
 
