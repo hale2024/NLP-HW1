@@ -73,11 +73,16 @@ Example: `"Hello, world!"` → `["hello", ",", "world", "!"]`
 tables/
 ├── translation_tables.txt    # Translation probability tables
 └── perplexity_comparison.txt # Perplexity analysis results
+```
 
-checkpoints/                 # [Google Drive](https://drive.google.com/drive/folders/1dnlo23Wedv0p1g_zPhfvPqN1TOHA0GPq?usp=sharing)
+`checkpoints/` ([Google Drive](https://drive.google.com/drive/folders/1dnlo23Wedv0p1g_zPhfvPqN1TOHA0GPq?usp=sharing))
+
+```
 ├── model_iter_*.pkl          # Checkpoints after each iteration
 └── model_final.pkl           # Final trained model
+```
 
+```
 preprocessed_data.pkl         # Tokenized sentence pairs
 ```
 
