@@ -46,7 +46,7 @@ class IBMModel1:
         print(f"Initial t(e|f) = 1/{len(self.target_vocab)} = {self.uniform_prob:.10f}")
     
     def run_em_iteration(self, parallel_data: List[Tuple[List[str], List[str]]]):
-        """Single EM iteration: E-step computes counts, M-step re-estimates probabilities."""
+        """Run one EM iteration."""
         count = defaultdict(lambda: defaultdict(float))
         total = defaultdict(float)
         

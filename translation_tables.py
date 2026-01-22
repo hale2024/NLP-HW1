@@ -23,14 +23,20 @@ def load_preprocessed_data(filepath: str) -> List[Tuple[List[str], List[str]]]:
         return pickle.load(f)
 
 
-def get_top_translations(model: IBMModel1, source_word: str, n: int = 5) -> List[Tuple[str, float]]:
+def get_top_translations(model: IBMModel1, source_word: str, n: int = 5, exclude_punct: bool = False) -> List[Tuple[str, float]]:
     translations = []
     for e in model.target_vocab:
+        if exclude_punct and is_punctuation(e):
+            continue
         prob = model.t[e][source_word]
         if prob > 0:
             translations.append((e, prob))
     translations.sort(key=lambda x: x[1], reverse=True)
     return translations[:n]
+
+
+def is_punctuation(word: str) -> bool:
+    return all(c in '.,!?;:"\'()[]{}' for c in word)
 
 
 def sentence_log2_probability(model: IBMModel1, source_sent: List[str], target_sent: List[str]) -> float:
@@ -59,26 +65,23 @@ def log2_perplexity(model: IBMModel1, source_sent: List[str], target_sent: List[
     return -log2_prob
 
 
-def generate_translation_tables(model: IBMModel1, parallel_data: List[Tuple[List[str], List[str]]]) -> str:
+def generate_single_table(model: IBMModel1, source_freq: Counter, exclude_punct: bool = False) -> List[str]:
     lines = []
-    lines.append(f"Top {TOP_N_TRANSLATIONS} translations for {TOP_N_SOURCE_WORDS} most common Spanish words:\n")
     
-    source_freq = Counter()
-    for f_sent, e_sent in parallel_data:
-        source_freq.update(f_sent)
+    if exclude_punct:
+        filtered_freq = Counter({w: f for w, f in source_freq.items() if not is_punctuation(w)})
+        most_common = filtered_freq.most_common(TOP_N_SOURCE_WORDS)
+    else:
+        most_common = source_freq.most_common(TOP_N_SOURCE_WORDS)
     
-    most_common = source_freq.most_common(TOP_N_SOURCE_WORDS)
-    
-    # Calculate column widths
     max_word_len = max(len(word) for word, _ in most_common)
     max_word_len = max(max_word_len, len("Spanish"))
     
-    # Build table with proper alignment
     lines.append(f"{'Spanish':<{max_word_len}} {'Freq':>8}  {'#1':<20} {'#2':<20} {'#3':<20} {'#4':<20} {'#5':<20}")
     lines.append("-" * (max_word_len + 8 + 5 * 22))
     
     for source_word, freq in most_common:
-        translations = get_top_translations(model, source_word, TOP_N_TRANSLATIONS)
+        translations = get_top_translations(model, source_word, TOP_N_TRANSLATIONS, exclude_punct=exclude_punct)
         trans_strs = [f"{t} ({p:.3f})" for t, p in translations]
         while len(trans_strs) < 5:
             trans_strs.append("-")
@@ -86,6 +89,24 @@ def generate_translation_tables(model: IBMModel1, parallel_data: List[Tuple[List
         line = f"{source_word:<{max_word_len}} {freq:>8}  "
         line += "  ".join(f"{s:<20}" for s in trans_strs)
         lines.append(line)
+    
+    return lines
+
+
+def generate_translation_tables(model: IBMModel1, parallel_data: List[Tuple[List[str], List[str]]]) -> str:
+    lines = []
+    
+    lines.append(f"Translation Tables: Top {TOP_N_TRANSLATIONS} translations for {TOP_N_SOURCE_WORDS} most common Spanish words\n")
+    
+    source_freq = Counter()
+    for f_sent, e_sent in parallel_data:
+        source_freq.update(f_sent)
+    
+    lines.append("Table 1: Including punctuation\n")
+    lines.extend(generate_single_table(model, source_freq, exclude_punct=False))
+    lines.append("\n")
+    lines.append("\nTable 2: Excluding punctuation\n")
+    lines.extend(generate_single_table(model, source_freq, exclude_punct=True))
     
     return "\n".join(lines)
 
@@ -133,16 +154,13 @@ def main():
     model = IBMModel1.load(FINAL_MODEL_FILE)
     print(f"Model loaded ({model.current_iteration} iterations)\n")
     
-    # Generate and save translation tables
     tables = generate_translation_tables(model, parallel_data)
     with open(TRANSLATION_TABLE_FILE, 'w') as f:
         f.write(tables)
     print(f"Translation tables saved to {TRANSLATION_TABLE_FILE}")
     print(tables)
-    
     print("\n")
     
-    # Generate and save perplexity comparison
     perplexity = generate_perplexity_comparison(model, parallel_data)
     with open(PERPLEXITY_FILE, 'w') as f:
         f.write(perplexity)

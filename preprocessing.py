@@ -41,12 +41,7 @@ def download_europarl():
 
 
 def tokenize(text: str) -> List[str]:
-    """
-    Tokenize text: lowercase, split on whitespace, separate punctuation.
-    
-    Lowercasing reduces vocabulary size and improves alignment quality
-    with limited training data.
-    """
+    """Tokenize text: lowercase, split on whitespace, separate punctuation."""
     text = text.lower()
     text = re.sub(r'([.,!?;:"\'\(\)\[\]{}])', r' \1 ', text)
     tokens = [t for t in text.split() if t]
