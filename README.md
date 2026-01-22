@@ -5,7 +5,7 @@
 - Halleluyah Brhanemesqel
 - Harshith Ravi Kopparam
 
-Implementation of IBM Model 1 statistical machine translation using the Europarl parallel corpus.
+Implementation of IBM Model 1 statistical machine translation using the Europarl parallel corpus of Spanish-English.
 
 ## Overview
 
