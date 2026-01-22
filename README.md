@@ -5,13 +5,19 @@
 - Halleluyah Brhanemesqel
 - Harshith Ravi Kopparam
 
+## Part 1: Evaluating Machine Translation
+
+See [ML for NLP Team 8 Part 1.pdf](ML%20for%20NLP%20Team%208%20Part%201.pdf)
+
+## Part 2: Implementing IBM Model 1
+
 Implementation of IBM Model 1 statistical machine translation using the Europarl parallel corpus of Spanish-English.
 
-## Overview
+### Overview
 
 This project implements the Expectation-Maximization (EM) algorithm for IBM Model 1 to learn word-level translation probabilities from Spanish-English parallel text.
 
-## Quick Start
+### Quick Start
 
 ```bash
 ./run_pipeline.sh
@@ -22,17 +28,17 @@ This runs the complete pipeline:
 2. **Training** - Trains IBM Model 1 using EM algorithm
 3. **Analysis** - Generates translation tables and perplexity comparisons
 
-## Results
+### Results
 
 - [Translation Tables](tables/translation_tables.txt) - Top 10 most common source-language(Spanish) words
 - [Perplexity Comparison](tables/perplexity_comparison.txt) - Perplexity scores for Real sentence from the training data vs randomly-sampled target-language(English) sentences of the same length
 
-## Requirements
+### Requirements
 
 - Python 3.7+
 - No external dependencies (uses only standard library)
 
-## Running Individual Steps
+### Running Individual Steps
 
 ```bash
 python3 preprocessing.py       # Step 1: Preprocess data
@@ -40,7 +46,7 @@ python3 training.py            # Step 2: Train model
 python3 translation_tables.py  # Step 3: Generate results
 ```
 
-## Configuration
+### Configuration
 
 Edit `config.py` to change parameters:
 
@@ -51,7 +57,7 @@ TOP_N_SOURCE_WORDS = 10     # Source words to display
 TOP_N_TRANSLATIONS = 5      # Translations per word
 ```
 
-## Preprocessing
+### Preprocessing
 
 **Tokenizer:** Custom tokenizer that:
 - Lowercases all text (reduces vocabulary size by merging case variants like "Hello"/"hello", and improves alignment quality with limited training data by combining sparse occurrences)
@@ -61,7 +67,7 @@ TOP_N_TRANSLATIONS = 5      # Translations per word
 
 Example: `"Hello, world!"` → `["hello", ",", "world", "!"]`
 
-## Output Files
+### Output Files
 
 ```
 tables/
@@ -75,7 +81,7 @@ checkpoints/
 preprocessed_data.pkl         # Tokenized sentence pairs
 ```
 
-## Project Structure
+### Project Structure
 
 ```
 ├── config.py              # Configuration settings
