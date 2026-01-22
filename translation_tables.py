@@ -113,7 +113,8 @@ def generate_translation_tables(model: IBMModel1, parallel_data: List[Tuple[List
 
 def generate_perplexity_comparison(model: IBMModel1, parallel_data: List[Tuple[List[str], List[str]]]) -> str:
     lines = []
-    lines.append("Perplexity Comparison: Real vs Random Translations\n")
+    lines.append("Perplexity scores for Real sentences from the training data vs")
+    lines.append("randomly-sampled target-language (English) sentences of the same length.\n")
     lines.append(f"{'#':<4} {'log₂ PP (Real)':>18} {'log₂ PP (Random)':>20}")
     lines.append("-" * 42)
     
@@ -131,10 +132,10 @@ def generate_perplexity_comparison(model: IBMModel1, parallel_data: List[Tuple[L
         
         lines.append(f"{i:<4} {log2_ppl_real:>18,.2f} {log2_ppl_random:>20,.2f}")
         
-        details.append(f"\nExample {i}:")
-        details.append(f"  Source: {' '.join(f_sent[:10])}...")
-        details.append(f"  Real:   {' '.join(e_sent_real[:10])}...")
-        details.append(f"  Random: {' '.join(e_sent_random[:10])}...")
+        details.append(f"\nExample {i} ({len(e_sent_real)} words):")
+        details.append(f"  Source (Spanish): {' '.join(f_sent)}")
+        details.append(f"  Real Translation from Training data(English): {' '.join(e_sent_real)}")
+        details.append(f"  Random (English): {' '.join(e_sent_random)}")
     
     lines.append("\nDetails:")
     lines.extend(details)
