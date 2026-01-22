@@ -53,9 +53,13 @@ TOP_N_TRANSLATIONS = 5      # Translations per word
 
 ## Preprocessing
 
-**Tokenizer:** Custom whitespace + punctuation tokenizer
-- Lowercasing: Yes (reduces vocabulary size, improves alignment with limited data)
-- Punctuation: Separated from words
+**Tokenizer:** Custom tokenizer that:
+- Lowercases all text (reduces vocabulary size, improves alignment with limited data)
+- Separates punctuation marks (.,!?;:"'()[]{}) from words by adding spaces
+- Splits on whitespace
+- Filters empty tokens
+
+Example: `"Hello, world!"` → `["hello", ",", "world", "!"]`
 
 ## Output Files
 
