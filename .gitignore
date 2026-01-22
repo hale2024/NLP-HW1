@@ -1,0 +1,19 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Model checkpoints
+checkpoints/
+
+# Data files
+europarl_data/
+preprocessed_data.pkl
+
+# Output logs
+pipeline_output.txt
+pipeline_outputUntil5.txt
+translation_output*.txt
+
+# Misc
+howToRun.txt
+requirements.txt
